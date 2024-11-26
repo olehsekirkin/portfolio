@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getAllProjects } from '../../utils/projects.ts';
+
+export async function getStaticPaths() {
+  const projects = await getAllProjects();
+  
+  return projects.map(project => ({
+    params: { id: project.id },
+    props: { project }
+  }));
+}
+
+interface Props {
+  project: {
+    id: string;
+    title: string;
+    description: string;
+    content: string;
+    technologies?: string[];
+  }
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={project.title}>
+  <article class="prose lg:prose-xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">{project.title}</h1>
+    
+    {project.technologies && (
+      <div class="flex gap-2 mb-6 flex-wrap">
+        {project.technologies.map(tech => (
+          <span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600">
+            {tech}
+          </span>
+        ))}
+      </div>
+    )}
+    
+    <div class="text-lg leading-relaxed space-y-6" set:html={project.content} />
+    
+    <div class="mt-12 pt-8 border-t">
+      <a 
+        href="/projects"
+        class="text-gray-900 font-medium hover:text-gray-600 inline-flex items-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 rotate-180" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Projects
+      </a>
+    </div>
+  </article>
+</Layout>

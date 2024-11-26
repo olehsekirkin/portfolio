@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const books = [
+  {
+    title: "Book Title 1",
+    cover: "https://placehold.co/200x300",
+    goodreadsLink: "https://www.goodreads.com/book/show/example1",
+    description: "My thoughts on this book. What I learned, what I liked, and why I recommend it. A personal review that gives insight into the value I found in reading this particular book."
+  },
+  {
+    title: "Book Title 2",
+    cover: "https://placehold.co/200x300",
+    goodreadsLink: "https://www.goodreads.com/book/show/example2",
+    description: "Another thoughtful review about this book. Discussing its main ideas, how it impacted my thinking, and what makes it worth reading. Personal insights and key takeaways from the book."
+  },
+  // Add more books as needed
+];
+---
+
+<Layout title="Bookshelf">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-12">Bookshelf</h1>
+    <div class="space-y-8">
+      {books.map(book => (
+        <div class="flex gap-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+          <a 
+            href={book.goodreadsLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="flex-shrink-0 w-32 transition-transform hover:scale-105"
+          >
+            <img 
+              src={book.cover} 
+              alt={book.title}
+              class="w-full rounded-lg shadow-md"
+            />
+          </a>
+          <div class="flex-1">
+            <a 
+              href={book.goodreadsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block hover:text-gray-600"
+            >
+              <h2 class="text-xl font-semibold mb-2">{book.title}</h2>
+            </a>
+            <p class="text-gray-600 leading-relaxed">{book.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Layout>
