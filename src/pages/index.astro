@@ -1,20 +1,49 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const sections = [
+  {
+    title: "Professional Journey",
+    content: "I'm a sales professional with a passion for data-driven decision making and a deep curiosity about how businesses tick. My journey began with a fascination for understanding what makes companies succeed or fail, which led me to discover the power of data in shaping business outcomes.\n\nCurrently, I'm leveraging my sales expertise while building a robust data analytics toolkit, including Python, SQL, Microsoft Excel, and Power BI. This unique combination of relationship-building skills and technical capabilities allows me to bridge the gap between business needs and data-driven solutions."
+  },
+  {
+    title: "Side Projects",
+    content: "When I'm not analyzing data or connecting with clients, you'll find me working on two exciting projects: a running app that syncs music to runners' optimal pace (born from my own running experiences), and a B2B SaaS platform focused on local lead generation. These side projects reflect my belief in using technology to solve practical, real-world challenges."
+  },
+  {
+    title: "Community Impact",
+    content: "I'm deeply committed to giving back to the community. Through platforms like Catchafire, I help nonprofits leverage data for greater impact. I contribute to Letters Against Isolation, writing letters to combat loneliness in our communities, and have collaborated with Love2Read on AI-driven initiatives to enhance children's reading development."
+  },
+  {
+    title: "Beyond Work",
+    content: "My intellectual curiosity extends beyond technology and business. I'm an avid reader with interests ranging from ancient philosophy to modern scientific thinking, always seeking to understand the fundamental principles that shape our world. This combination of practical business experience, technical skills, and philosophical outlook gives me a unique perspective on problem-solving and innovation.\n\nBeyond work and volunteering, you'll find me exploring hiking trails, maintaining a consistent gym routine, and continuously learning through coding and reading. I believe in building a life that balances professional growth with personal development and community impact."
+  }
+];
 ---
 
 <Layout title="About">
-  <div class="prose lg:prose-xl mx-auto">
-    <h1 class="text-3xl font-bold mb-8">About</h1>
-    <div class="text-lg leading-relaxed">
-      <!-- Replace this with your personal description -->
-      <p>
-        Hello! I'm [Your Name], a data scientist passionate about turning complex data into meaningful insights. 
-        With experience in [your areas of expertise], I focus on solving real-world problems through data-driven approaches.
-      </p>
-      <p class="mt-4">
-        When I'm not working with data, you can find me reading books on technology, science, and business, 
-        or exploring new ways to visualize and communicate data stories.
-      </p>
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-12">About</h1>
+    <div class="space-y-8">
+      {sections.map(section => (
+        <div class="section p-4 rounded-lg hover:bg-gray-50 transition-colors">
+          <h2 class="text-xl font-semibold mb-2">{section.title}</h2>
+          <div class="text-gray-600 leading-relaxed">
+            {section.content.split('\n\n').map(paragraph => (
+              <p class="mb-4">{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </Layout>
+
+<style>
+  .section {
+    transition: transform 0.2s ease-in-out;
+  }
+  .section:hover {
+    transform: translateX(8px);
+  }
+</style>

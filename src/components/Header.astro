@@ -4,6 +4,7 @@ import SocialButton from './SocialButton.astro';
 interface Props {
   name: string;
   subtitle: string;
+  location: string;
   photoUrl: string;
   socials: Array<{
     label: string;
@@ -11,21 +12,24 @@ interface Props {
   }>;
 }
 
-const { name, subtitle, photoUrl, socials } = Astro.props;
+const { name, subtitle, location, photoUrl, socials } = Astro.props;
 ---
 
-<header class="fixed top-0 left-0 right-0 bg-white z-50 pt-8 pb-4">
-  <div class="max-w-3xl mx-auto px-4">
+<header class="fixed top-0 left-0 right-0 bg-white z-50">
+  <div class="max-w-3xl mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-md p-6">
       <div class="flex items-center gap-6">
         <img
           src={photoUrl}
           alt={name}
-          class="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+          class="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-2 border-gray-200"
         />
         <div class="flex-1">
           <h1 class="text-2xl font-bold text-gray-900">{name}</h1>
-          <p class="text-gray-600 mt-1 mb-4">{subtitle}</p>
+          <div class="text-gray-600 mt-1 mb-4">
+            <p class="leading-relaxed">{subtitle}</p>
+            <p class="text-sm text-gray-500 mt-1">{location}</p>
+          </div>
           <div class="flex gap-3">
             {socials.map(social => (
               <SocialButton href={social.url} label={social.label} />
@@ -36,3 +40,5 @@ const { name, subtitle, photoUrl, socials } = Astro.props;
     </div>
   </div>
 </header>
+
+<div class="h-[24px]"></div>

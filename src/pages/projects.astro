@@ -5,9 +5,9 @@ import { getAllProjects } from '../utils/projects';
 const projects = await getAllProjects();
 ---
 
-<Layout title="Data Projects">
+<Layout title="Projects">
   <div class="max-w-3xl mx-auto">
-    <h1 class="text-3xl font-bold mb-12">Data Projects</h1>
+    <h1 class="text-3xl font-bold mb-12">Projects</h1>
     <div class="space-y-8">
       {projects.map(project => (
         <div class="flex gap-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">

@@ -1,28 +1,234 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const books = [
+const currentTop3 = [
   {
-    title: "Book Title 1",
-    cover: "https://placehold.co/200x300",
-    goodreadsLink: "https://www.goodreads.com/book/show/example1",
-    description: "My thoughts on this book. What I learned, what I liked, and why I recommend it. A personal review that gives insight into the value I found in reading this particular book."
+    title: "1984",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1532714506i/40961427.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/40961427-1984",
+    description: "Through Winston Smith's haunting story, Orwell delivers a masterful warning about totalitarian control that feels eerily relevant today. The novel's exploration of surveillance, thought control, and the manipulation of truth resonates deeply in our digital age. What struck me most was Orwell's insight that freedom begins in the mind - and how easily that freedom can be surrendered when we allow others to define our reality."
   },
   {
-    title: "Book Title 2",
-    cover: "https://placehold.co/200x300",
+    title: "The Big Short",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1456711581i/29363577.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/29363577-the-big-short?from_search=true&from_srp=true&qid=gYZ3CbgfmU&rank=8",
+    description: "Lewis masterfully unravels the 2008 financial crisis through the eyes of investors who saw it coming. Following characters like Michael Burry and Steve Eisman, the book reveals how blind optimism and greed in the mortgage market led to disaster. What captivates is Lewis's ability to make complicated financial concepts accessible while maintaining the tension of a thriller. The moral is about questioning conventional wisdom when everyone else is caught up in the frenzy."
+  },
+  {
+    title: "A Book of Five Rings",
+    cover: "https://images.gr-assets.com/authors/1422091726p8/8330589.jpg",
     goodreadsLink: "https://www.goodreads.com/book/show/example2",
-    description: "Another thoughtful review about this book. Discussing its main ideas, how it impacted my thinking, and what makes it worth reading. Personal insights and key takeaways from the book."
+    description: "Through this legendary 17th-century text, master swordsman Musashi shares wisdom that transcends combat. His five rings - Earth, Water, Fire, Wind, and Void - offer insights into strategy and mastery that remain relevant today. What resonates most is Musashi's emphasis on simplicity and directness - he teaches that true mastery comes from understanding fundamental principles and applying them with focus. Though written for warriors, its lessons about discipline and strategic thinking are invaluable for any modern reader."
   },
-  // Add more books as needed
+];
+
+const readBooks = [
+  {
+    title: "Meditations",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1421618636i/30659.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/30659.Meditations"
+  },
+  {
+    title: "The Prince",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1390055828i/28862.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/28862.The_Prince?ref=nav_sb_ss_1_13"
+  },
+    {
+    title: "Animal Farm",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1325861570i/170448.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/170448.Animal_Farm?from_search=true&from_srp=true&qid=UsAjQXKldN&rank=2"
+  },
+    {
+    title: "El Camino",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1422807992i/60662.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/60662.El_camino"
+  },
+    {
+    title: "El amor en los tiempos del cólera",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1344369019i/500400.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/500400.El_amor_en_los_tiempos_del_c_lera"
+  },
+    {
+    title: "The Sign",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1442600604i/3851330.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/3851330-the-sign?ref=nav_sb_ss_4_15"
+  },
+    {
+    title: "12 Rules for Life: An Antidote to Chaos",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1512705866i/30257963.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/30257963-12-rules-for-life"
+  },
+    {
+    title: "El ladrón de tumbas",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1418390169i/181743.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/181743.El_ladr_n_de_tumbas"
+  },
+    {
+    title: "La dama del alba",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1348228229i/74854.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/74854.La_dama_del_alba"
+  },
+    {
+    title: "Bodas de sangre",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386923336i/77903.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/77903.Bodas_de_sangre"
+  },
+    {
+    title: "In the Heat of the Summer",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1170683808i/67932.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/67932.In_the_Heat_of_the_Summer?from_search=true&from_srp=true&qid=cxBXwy3ZGj&rank=1"
+  },
+    {
+    title: "El príncipe de la niebla",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386236788i/19202652.jpg",
+    goodreadsLink: "hhttps://www.goodreads.com/book/show/19202652-el-pr-ncipe-de-la-niebla"
+  },
+    {
+    title: "El almacén de las palabras terribles",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1376896634i/1571881.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/1571881.El_almac_n_de_las_palabras_terribles"
+  },
+    {
+    title: "Cordeluna",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1335190716i/11172554.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/11172554-cordeluna"
+  },
+    {
+    title: "La puerta de Agartha",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1300722584i/10835919.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/10835919-la-puerta-de-agartha"
+  },
+    {
+    title: "La sonrisa perdida de Paolo Malatesta",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1402341302i/22014297.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/22014297-la-sonrisa-perdida-de-paolo-malatesta"
+  },
+    {
+    title: "Never",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1618507557i/57747930.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/57747930-never?from_search=true&from_srp=true&qid=f0K7mf4dJk&rank=1"
+  }
+];
+
+const toReadBooks = [
+  {
+    title: "Letters from a Stoic",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1421619214i/97411.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/97411.Letters_from_a_Stoic"
+  },
+  {
+    title: "The Brothers Karamazov",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1427728126i/4934.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/4934.The_Brothers_Karamazov?ref=nav_sb_ss_1_9"
+  },
+    {
+    title: "Mere Christianity",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1531409863i/40792344.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/40792344-mere-christianity"
+  },
+    {
+    title: "The Longevity Code: Secrets to Living Well for Longer from the Front Lines of Science",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1499343011i/34397791.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/34397791-the-longevity-code"
+  },
+    {
+    title: "The Ride of a Lifetime: Lessons Learned from 15 Years as CEO of the Walt Disney Company",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1569353695i/46256558.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/46256558-the-ride-of-a-lifetime"
+  },
+    {
+    title: "An Enquiry Concerning Human Understanding",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1348617665i/130119.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/130119.An_Enquiry_Concerning_Human_Understanding"
+  },
+    {
+    title: "Natural Goodness",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1348353592i/482752.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/482752.Natural_Goodness"
+  },
+    {
+    title: "The Logic of Scientific Discovery",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1405192590i/61550.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/61550.The_Logic_of_Scientific_Discovery"
+  },
+    {
+    title: "Metaphors We Live By",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1388194058i/34459.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/34459.Metaphors_We_Live_By"
+  },
+      {
+    title: "Behave: The Biology of Humans at Our Best and Worst",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1517732866i/31170723.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/31170723-behave"
+  },
+      {
+    title: "The Structure of Scientific Revolutions",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1396422530i/61539.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/61539.The_Structure_of_Scientific_Revolutions"
+  },
+      {
+    title: "Law As a Social System",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1347719990i/733257.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/733257.Law_As_a_Social_System"
+  },
+      {
+    title: "Noise: A Flaw in Human Judgment",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1617709587i/55339408.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/55339408-noise"
+  },
+        {
+    title: "Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1388180506i/38315.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/38315.Fooled_by_Randomness"
+  },
+        {
+    title: "Politics and the English Language",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1260733026i/6324725.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/6324725-politics-and-the-english-language"
+  },
+        {
+    title: "On the Nature of Things",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1347656033i/195771.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/195771.On_the_Nature_of_Things"
+  },
+          {
+    title: "The Holy Bible: King James Version",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1631816305i/1923820.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/1923820.The_Holy_Bible"
+  },
+          {
+    title: "Math with Bad Drawings",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1528328702i/36205393.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/36205393-math-with-bad-drawings"
+  },
+          {
+    title: "What Is Ancient Philosophy?",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1388299875i/31875.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/31875.What_Is_Ancient_Philosophy_?from_search=true&from_srp=true&qid=kZrkGzKl3t&rank=1"
+  },        {
+    title: "The Present Alone is Our Happiness: Conversations with Jeannie Carlier and Arnold I. Davidson",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1328818613i/5059865.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/5059865-the-present-alone-is-our-happiness#?ref=nav_brws"
+  },
+          {
+    title: "Epictetus: Discourses, Books 1-2",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1389516229i/20516998.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/20516998-epictetus#CommunityReviews"
+  },        {
+    title: "Yes to Life: In Spite of Everything",
+    cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1576019052i/48711165.jpg",
+    goodreadsLink: "https://www.goodreads.com/book/show/48711165-yes-to-life"
+  },
 ];
 ---
 
 <Layout title="Bookshelf">
   <div class="max-w-3xl mx-auto">
     <h1 class="text-3xl font-bold mb-12">Bookshelf</h1>
-    <div class="space-y-8">
-      {books.map(book => (
+    
+    <h2 class="text-2xl font-bold mb-8">Current Top 3</h2>
+    <div class="space-y-8 mb-16">
+      {currentTop3.map(book => (
         <div class="flex gap-6 p-4 rounded-lg hover:bg-gray-50 transition-colors">
           <a 
             href={book.goodreadsLink} 
@@ -47,6 +253,48 @@ const books = [
             </a>
             <p class="text-gray-600 leading-relaxed">{book.description}</p>
           </div>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold mb-8">Books I've Read</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-16">
+      {readBooks.map(book => (
+        <div class="text-center">
+          <a 
+            href={book.goodreadsLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="inline-block transition-transform hover:scale-105"
+          >
+            <img 
+              src={book.cover} 
+              alt={book.title}
+              class="w-full rounded-lg shadow-md mb-2"
+            />
+            <h3 class="text-sm font-medium">{book.title}</h3>
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <h2 class="text-2xl font-bold mb-8">To Read Books</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      {toReadBooks.map(book => (
+        <div class="text-center">
+          <a 
+            href={book.goodreadsLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="inline-block transition-transform hover:scale-105"
+          >
+            <img 
+              src={book.cover} 
+              alt={book.title}
+              class="w-full rounded-lg shadow-md mb-2"
+            />
+            <h3 class="text-sm font-medium">{book.title}</h3>
+          </a>
         </div>
       ))}
     </div>
