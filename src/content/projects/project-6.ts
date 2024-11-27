@@ -1,9 +1,9 @@
 export default {
     id: "project-6",
     title: "ETL Pipeline: front & backend",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
-    technologies: ["Python", "Google BigQuery", "Apache Airflow", "SQL"],
+    image: "/images/dataetl.jpg",
+    description: "Built end-to-end automated ETL pipeline integrating Alpha Vantage API with BigQuery for real-time stock analysis. Orchestrated daily data workflows using Apache Airflow and created dynamic Power BI dashboards featuring 12+ key trading metrics, enabling instant market insights.",
+    technologies: ["SQL", "Python", "Google BigQuery", "Apache Airflow"],
     date: "2024-02-01",
     content: `
 <p>&nbsp; &nbsp; 1. Extract, Transform, Load<br />&nbsp; &nbsp; 2. Aggregation and Analysis<br />&nbsp; &nbsp; 3. Automation with Apache Airflow<br />&nbsp; &nbsp; 4. Connect<br />&nbsp; &nbsp; 5. Automate</p>

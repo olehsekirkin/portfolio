@@ -1,8 +1,8 @@
 export default {
   id: "project-2",
   title: "Motor Vehicle Collisions",
-  image: "https://placehold.co/400x300",
-  description: "Description of your second data project. Highlight the impact and results.",
+  image: "/images/cars.png",
+  description: "Leveraged advanced geospatial analysis and statistical testing to identify critical crash hotspots and high-risk patterns in NYC's motor vehicle collisions. Uncovered statistically significant correlations between accident severity, location, and timing (p < 0.001), enabling data-driven recommendations for emergency response optimization and targeted safety interventions.",
   technologies: ["Python", "Folium", "Statistical Testing Tools", "Data Analysis"],
   date: "2024-02-01",
   content: `

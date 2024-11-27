@@ -1,8 +1,8 @@
 export default {
     id: "project-3",
     title: "Power BI Showroom",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
+    image: "/images/pbi.jpg",
+    description: "Storytelling through Power BI dashboards. Transformed raw data into interactive visualizations across various industries.",
     technologies: ["Power BI"],
     date: "2024-02-01",
     content: `

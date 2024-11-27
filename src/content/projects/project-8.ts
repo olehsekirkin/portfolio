@@ -1,8 +1,8 @@
 export default {
     id: "project-8",
     title: "This Website",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
+    image: "/images/astro.png",
+    description: "Built this sleek portfolio from scratch using Astro, TypeScript, CSS and HTML. Clean design, fast load times, and fully open source - grab it from my GitHub if you want your own minimalist showcase!",
     technologies: ["Astro", "TypeScript", "CSS", "HTML"],
     date: "2024-02-01",
     content: `

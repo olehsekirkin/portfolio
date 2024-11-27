@@ -1,9 +1,9 @@
 export default {
     id: "project-5",
     title: "Deep Marketing Data Analysis",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
-    technologies: ["Python", "Marketing", "Data Analysis"],
+    image: "/images/roc.png",
+    description: "Optimized bank marketing campaign ROI by uncovering that 78% of clients with >375-second interactions opened term deposits, versus 32% below threshold. Built ML models reaching 85% accuracy in predicting client conversion, enabling targeted outreach that increased successful deposits.",
+    technologies: ["Python", "Marketing Data", "Data Analysis"],
     date: "2024-02-01",
     content: `
 <p>&nbsp; &nbsp;&nbsp;1. The Basics<br />&nbsp; &nbsp;&nbsp;2. Client Behavior Analysis<br />&nbsp; &nbsp; 3. Stratified Sampling<br />&nbsp; &nbsp; 4. ROC Curve<br />&nbsp; &nbsp; 5. Conclusion and Recommendations</p>

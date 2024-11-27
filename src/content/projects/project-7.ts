@@ -1,8 +1,8 @@
 export default {
     id: "project-7",
     title: "Topological Data Analysis",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
+    image: "/images/tda.gif",
+    description: "Pioneered application of Topological Data Analysis (TDA) for detecting market crash patterns in S&P500 data. Developed Python algorithm using persistent homology and Wasserstein distance to identify structural similarities between historical market periods.",
     technologies: ["Python"],
     date: "2024-02-01",
     content: `

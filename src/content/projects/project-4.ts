@@ -1,9 +1,9 @@
 export default {
     id: "project-4",
     title: "Competitive Intelligence Analysis for Kimball International",
-    image: "https://placehold.co/400x300",
-    description: "Description of your second data project. Highlight the impact and results.",
-    technologies: ["Python", "Excel", "Web Scraping", "Competitive Intelligence Analysis"],
+    image: "/images/comp.png",
+    description: "Drove data-backed market strategy for Kimball International by analyzing competitor pricing, features, and customer behavior across digital channels. Identified untapped $500-700 mid-tier market opportunity and revealed 47% surge in digital-first purchases, enabling strategic positioning in the growing ergonomic office chair segment.",
+    technologies: ["Python", "Microsoft Excel", "Web Scraping", "Competitive Intelligence Analysis"],
     date: "2024-02-01",
     content: `
 <p>This report provides a strategic view of the office chair market, examining the competitive landscape to inform Kimball International's product and market strategies. The focus lies on understanding pricing structures, feature trends, brand positioning, and customer satisfaction metrics using direct competitor data. Key takeaways include opportunities in pricing gaps, potential feature enhancements, and insights into customer preferences.</p>
