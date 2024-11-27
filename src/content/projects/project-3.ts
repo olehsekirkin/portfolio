@@ -1,19 +1,16 @@
 export default {
     id: "project-3",
-    title: "Project 3",
-    preview: "Another engaging preview that summarizes the key aspects of this project.",
+    title: "Power BI Showroom",
     image: "https://placehold.co/400x300",
     description: "Description of your second data project. Highlight the impact and results.",
-    technologies: ["React", "Node.js", "MongoDB"],
+    technologies: ["Power BI"],
     date: "2024-02-01",
     content: `
-      <h2>Overview</h2>
-      <p>Comprehensive overview of the second project and its objectives.</p>
-  
-      <h2>Challenge</h2>
-      <p>Description of the specific challenges and problems addressed.</p>
-  
-      <h2>Solution</h2>
-      <p>Detailed explanation of the implemented solution and methodology.</p>
+<p><strong>NETFLIX CATALOG</strong></p>
+<p><strong>US ECONOMY</strong></p>
+<p><strong>REAL ESTATE DATA</strong></p>
+<p><strong>CAR SALES REPORT</strong></p>
+<p><strong>LUXURY CAR SALES DASHBOARD</strong></p>
+<p><strong>ECOMMERCE SALES DASHBOARD</strong></p>
     `
   };
