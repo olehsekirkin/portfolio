@@ -194,7 +194,7 @@ export default {
 </body>
 </html>
 <p><strong>2.&nbsp;Data Preparation: cleaning and structuring SQL integration</strong></p>
-<p>Before diving into any analysis, it's imperative to ensure the data's integrity and consistency. The <em>preparedataforSQL.py</em> (you can find it on the linked GitHub at the bottom of the article) script is meticulously crafted to cleanse and preprocess the raw data, making it SQL-ready. Here's a breakdown of its functionalities:</p>
+<p>Before diving into any analysis, it's imperative to ensure the data's integrity and consistency. The <em>preparedataforSQL.py</em> script is meticulously crafted to cleanse and preprocess the raw data, making it SQL-ready. Here's a breakdown of its functionalities:</p>
 <p>&nbsp; &nbsp; - Processing hospitalization_details.csv: entries with invalid or missing dates are removed, then converts textual month representations (January, February) to numerical values, and restructures the date into a standarized time, following a mm/dd/yyyy format. 'ID' prefix is striped from Customer_ID and we ensure it's an integer. Numerical values are also striped from Hospital_tier and City_tier.<br />&nbsp; &nbsp; - Processing Medical_Examinatios.csv: ID normalization once again, transforms textual description of major surgeries into numerical counts.<br />&nbsp; &nbsp; - Processing Names.xlsx: we ensure consistency across datasets here.</p>
 <p>This complete cleaning ensures that the data fed into our analytical model is both accurate and reliable.</p>
 <p><strong>3. Patient Segmentation: unveiling clusters</strong></p>
@@ -281,7 +281,7 @@ export default {
 <p>The model achieved an R&sup2; score of 0.43, meaning that 43% of the variance in hospitalization charges can be explained by the model. While the score reflects a reasonable predictive capacity, it also suggests there are additional factors influencing charges that were not captured currently.</p>
 <p>The top 3 most influential features driving hospitalization charges were: 1) hospital tier (57%), 2) BMI (22%) and 3) age (18%).</p>
 <div style="background-color: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px;">
-<p><strong>Interactive Model Results Dashboard</strong></p>
+<p><strong>Model Results Dashboard</strong></p>
 <!DOCTYPE html>
 <html>
 <head>
