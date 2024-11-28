@@ -200,10 +200,10 @@ export default {
             
             <p>This endeavor encompasses meticulous data preparation, patient segmentation through clustering algorithms, robust predictive modeling to forecast hospitalization charges and assess patient risk scores, geospatial analysis to visualize healthcare metrics across regions, and the development of an interactive dashboard for real-time monitoring. Here's a comprehensive overview of the journey and the methodologies employed.</p>
             
-            <p>&nbsp; &nbsp; 1. Data Architecture: laying the foundation<br />&nbsp; &nbsp; 2. Data Preparation: cleaning and structuring SQL integration<br />&nbsp; &nbsp; 3. Patient Segmentation: unveiling clusters<br />&nbsp; &nbsp; 4. Predictive Modeling: forecasting charges and assessing risks<br />&nbsp; &nbsp; 5. Geospatial Analysis: mapping metrics across states<br />&nbsp; &nbsp; 6. Cost Analysis: unveiling financial insights<br />&nbsp; &nbsp; 7. Chronic Disease Management: predicting complications<br />&nbsp; &nbsp; 8. Dashboard development: real-time monitoring with Streamlit<br />&nbsp; &nbsp; 9. Scripts: structuring and querying the data<br />&nbsp; &nbsp; 10. Conclusion</p>
+            <p>&nbsp; &nbsp; 1. Data Architecture: Laying the Foundation<br />&nbsp; &nbsp; 2. Data Preparation: Cleaning and Structuring SQL Integration<br />&nbsp; &nbsp; 3. Patient Segmentation: Unveiling Clusters<br />&nbsp; &nbsp; 4. Predictive Modeling: Forecasting Charges and Assessing Risks<br />&nbsp; &nbsp; 5. Geospatial Analysis: Mapping Metrics Across States<br />&nbsp; &nbsp; 6. Cost Analysis: Unveiling Financial Insights<br />&nbsp; &nbsp; 7. Chronic Disease Management: Predicting Complications<br />&nbsp; &nbsp; 8. Dashboard development: Real-time Monitoring with Streamlit<br />&nbsp; &nbsp; 9. Scripts: Structuring and Querying the Data<br />&nbsp; &nbsp; 10. Conclusion</p>
         </div>
 <!-- Data Architecture Section -->
-        <div class="section-header">1. Data Architecture: laying the foundation</div>
+        <div class="section-header">1. Data Architecture: Laying the Foundation</div>
         
         <div class="text-content">
             <p>At the heart of any data-driven project lies a well-structured database. Our healthcare dataset is organized within the&nbsp;<code>healthcare_data</code>&nbsp;schema, comprising three pivotal tables:</p>
@@ -330,7 +330,7 @@ export default {
             </table>
         </div>
 <!-- Data Preparation Section -->
-        <div class="section-header">2. Data Preparation: cleaning and structuring SQL integration</div>
+        <div class="section-header">2. Data Preparation: Cleaning and Structuring SQL Integration</div>
         
         <div class="text-content">
             <p>Before diving into any analysis, it's imperative to ensure the data's integrity and consistency. The <em>preparedataforSQL.py</em> script is meticulously crafted to cleanse and preprocess the raw data, making it SQL-ready. Here's a breakdown of its functionalities:</p>
@@ -341,7 +341,7 @@ export default {
         </div>
 
         <!-- Patient Segmentation Section -->
-        <div class="section-header">3. Patient Segmentation: unveiling clusters</div>
+        <div class="section-header">3. Patient Segmentation: Unveiling Clusters</div>
         
         <div class="text-content">
             <p>Understanding patient segments is crucial for personalized healthcare strategies, and the <em>patientsegmentation.py</em> script employs k-means clustering algorithm to identify distinct patient groups based on various health metrics and demographic factors.</p>
@@ -373,7 +373,7 @@ export default {
             <p>&nbsp; &nbsp; - Cluster 0, 144 patients: youngest group with an average age of 20.81, least likely to have children with an average of 0.34, highest number of major surgeries at 1.13 average and no presence of cancer history.<br />&nbsp; &nbsp; Smallest group but their profile stands out due to their high surgery rate despite their young age. They may benefit from additional monitoring or pre-surgery interventions to improve outcomes.<br />&nbsp; &nbsp; - Cluster 1, 805 patients: oldest group with an average age of 54.11, moderate presence of children with an average of 0.65, relatively low surgeries at 0.90 on average, cancer history is presence but low, at 2.36%.<br />&nbsp; &nbsp; Second largest group, representing an older demographic but with stable health. Might need targeted chronic care management ato prevent further complications.<br />&nbsp; &nbsp; - Cluster 2, 372 patients: middle-aged group, with an average age of 36.62, higher than average children at 0.97 and average surgery rate at 1.0 per person. 100% of patients have a cancer history.<br />&nbsp; &nbsp; Small cluster, all of whom have a cancer history, which can be prioritized for ongoing treatment and care coordination.<br />&nbsp; &nbsp; - Cluster 3, 1008 patients: average age similar to the cluster above, at 34.49. Highest children average at 1.44 and fewest surgeries, at 0.32 per patient. No significant presence of cancer or smokers in this group.<br />&nbsp; &nbsp; Largest group, reflecting a more typical, low-complication patient group, requiring fewer medical interventions. This group can be managed with preventive strategies to keep their health stable and reduce the likelihood of future complications.</p>
         </div>
 <!-- Predictive Modeling Section -->
-        <div class="section-header">4. Predictive Modeling: forecasting charges and assessing risks</div>
+        <div class="section-header">4. Predictive Modeling: Forecasting Charges and Assessing Risks</div>
         
         <div class="text-content">
             <p>The <em>predictionmodeling.py</em> script takes a deep dive into predictive analytics, focusing on two primary objectives: 1) predicting hospitalization charges, and 2) creating risk scores for patient complications.</p>
@@ -734,7 +734,7 @@ export default {
             <p>The ability to predict hospitalization costs and assess patient risk based on complications offers powerful tools for both operational efficiency and patient care. These insights can inform financial planning, resource allocation, and help healthcare providers deliver more personalized care to patients, ultimately improving outcomes and reducing costs.</p>
         </div>
 <!-- Geospatial Analysis Section -->
-        <div class="section-header">5. Geospatial Analysis: mapping healthcare metrics across states</div>
+        <div class="section-header">5. Geospatial Analysis: Mapping Healthcare Metrics Across States</div>
         
         <div class="text-content">
             <p>The geospatial analysis reveals regional disparities in healthcare charges and patient health metrics. Such insights are instrumental in identifying areas that require targeted interventions, optimizing resource distribution, and formulating region-specific healthcare policies.</p>
@@ -747,7 +747,7 @@ export default {
         </div>
 
         <!-- Cost Analysis Section -->
-        <div class="section-header">6. Cost Analysis: unveiling financial insights</div>
+        <div class="section-header">6. Cost Analysis: Unveiling Financial Insights</div>
         
         <div class="text-content">
             <p>Effective cost management is crucial for the sustainability of healthcare institutions. The <em>costanalysis.py</em> script conducts an in-depth analysis of hospitalization charges, exploring their distribution, influencing factors, and interrelationships with other health metrics.</p>
@@ -796,7 +796,7 @@ export default {
             <p>This cost analysis provides actionable insights for healthcare administrators to refine budgeting and resource allocation strategies. By focusing on high-cost areas, such as patients with elevated BMI or older age groups, healthcare providers can design interventions that reduce costs while maintaining quality care.</p>
         </div>
 <!-- Chronic Disease Management Section -->
-        <div class="section-header">7. Chronic Disease Management: predicting complications</div>
+        <div class="section-header">7. Chronic Disease Management: Predicting Complications</div>
         
         <div class="text-content">
             <p>Managing chronic diseases effectively is critical for improving patient outcomes while reducing healthcare costs. The <em>chronicdisease.py</em> script leverages machine learning techniques to predict complications in patients with chronic conditions, stratifying risk levels based on various health factors.</p>
@@ -829,7 +829,7 @@ export default {
         </div>
 
         <!-- Dashboard Development Section -->
-        <div class="section-header">8. Dashboard development: real-time monitoring with Streamlit</div>
+        <div class="section-header">8. Dashboard development: Real-time Monitoring with Streamlit</div>
         
         <div class="text-content">
             <p>To facilitate real-time monitoring and interactive exploration of healthcare data, an intuitive dashboard was developed using Streamlit. The <em>app.py</em> script orchestrates various data visualizations and functionalities, providing stakeholders with a comprehensive overview of patient metrics, facility utilization, and financial insights.</p>

@@ -84,18 +84,384 @@ export default {
 <p>3)&nbsp;Load:&nbsp;The final step involves loading the transformed data into a data warehouse (there are many and is up to you which one to use; Amazon Redshift, Google BigQuery, Microsoft Azure, Snowflake). This allows for efficient querying and analysis using SQL. Once loaded, I can perform aggregations and analyses on the data to uncover trends and patterns that inform investment decisions. What I did here is connect BigQuery to my personal Drive, so it extracts the files from there and uploads the dataset I created earlier.</p>
 <div class="section-header">2. Aggregation and Analysis</div>
 <p>After successfully loading the extracted and transformed data into BigQuery, the next step involves performing various aggregations and transformations to derive meaningful insights. This section outlines several SQL queries that I applied to the stock market data, each designed to compute key metrics for analysis and decision-making.</p>
-<p>&nbsp; &nbsp; - The&nbsp;Daily OHLC&nbsp;(Open, High, Low, Close) aggregation provides a comprehensive view of a stock&rsquo;s daily performance by summarizing the opening, high, low, and closing prices. This aggregation allows investors to analyze price movements over time. By capturing these key price points, I can evaluate how a stock performed during the trading day.</p>
-<p>&nbsp; &nbsp; - Intraday Range:&nbsp;The intraday range measures the difference between the highest and lowest prices within each trading day, providing insights into daily volatility. This information is crucial for understanding the price fluctuations that can affect trading strategies.</p>
-<p>&nbsp; &nbsp; - Close-to-Close Change:&nbsp;This analysis calculates the daily change in closing prices, which helps identify trends and momentum in stock performance. Understanding these changes can assist in making informed trading decisions.</p>
-<p>&nbsp; &nbsp; - OHCL Average:<strong>&nbsp;</strong>Calculating the average of the open, high, low, and close prices provides a smoothed view of the stock&rsquo;s performance over the day. This metric can help identify trends that may not be apparent from daily price movements alone.</p>
-<p>&nbsp; &nbsp; - Simple Moving Average (SMA):&nbsp;The SMA smooths out short-term price fluctuations by averaging the closing prices over a specified period, in this case, a 5-hour window. This helps in identifying the overall trend and reducing noise in the data.</p>
-<p>&nbsp; &nbsp; - Volume-Weighted Average Price (VWAP):<strong>&nbsp;</strong>VWAP considers both price and volume, providing a more comprehensive view of a stock&rsquo;s performance during the trading session. This metric is particularly useful for traders looking to determine the average price paid for a stock over a specific period.</p>
-<p>&nbsp; &nbsp; - Intraday Volatility:&nbsp;Calculating intraday volatility using the standard deviation of closing prices gives insights into the price fluctuations within each trading day, helping investors gauge the risk associated with a stock.</p>
-<p>&nbsp; &nbsp; - Price Volatility (Close-to-Close):&nbsp;This query calculates the standard deviation of the closing prices to measure price volatility from one day to the next, which is critical for assessing the stock&rsquo;s overall price stability.</p>
-<p>&nbsp; &nbsp; - Cumulative Volume:&nbsp;The cumulative volume tracks the total volume of shares traded over time, which can provide insights into buying or selling pressure in the market.</p>
-<p>&nbsp; &nbsp; - Cumulative Price Change:&nbsp;This metric captures the total change in price over time, highlighting the stock&rsquo;s performance trajectory and potential trends.</p>
-<p>&nbsp; &nbsp; - Relative Strength Index (RSI)<strong>:&nbsp;</strong>The RSI is a momentum oscillator that measures the speed and change of price movements. It ranges from 0 to 100 and is typically used to identify overbought or oversold conditions.</p>
-<p>&nbsp; &nbsp; - Exponential Moving Average (EMA):<strong>&nbsp;</strong>The EMA gives more weight to recent prices, making it more responsive to new information compared to the SMA. This calculation helps traders identify trends more effectively.</p>
+<html>
+<head>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .query-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #d4d4d4;
+            overflow-x: auto;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .description {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .keyword { color: #569cd6; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+    </style>
+</head>
+<body>
+    <!-- Daily OHLC -->
+    <div class="section-title">Daily OHLC (Open, High, Low, Close)</div>
+    <div class="description">
+        Provides a comprehensive view of a stock's daily performance by summarizing the opening, high, low, and closing prices.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">WITH</span> daily_data <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        <span class="function">DATE</span>(TIMESTAMP_FIELD_0) <span class="keyword">AS</span> date,
+        open,
+        high,
+        low,
+        close,
+        volume,
+        <span class="function">FIRST_VALUE</span>(open) <span class="keyword">OVER</span> (<span class="keyword">PARTITION BY</span> <span class="function">DATE</span>(TIMESTAMP_FIELD_0) <span class="keyword">ORDER BY</span> TIMESTAMP_FIELD_0) <span class="keyword">AS</span> daily_open,
+        <span class="function">LAST_VALUE</span>(close) <span class="keyword">OVER</span> (<span class="keyword">PARTITION BY</span> <span class="function">DATE</span>(TIMESTAMP_FIELD_0) <span class="keyword">ORDER BY</span> TIMESTAMP_FIELD_0 <span class="keyword">ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</span>) <span class="keyword">AS</span> daily_close
+    <span class="keyword">FROM</span>
+        'portfolio-etl-pipeline.stocks_data.stock_NVDA'
+)
+<span class="keyword">SELECT</span>
+    date,
+    <span class="function">MAX</span>(daily_open) <span class="keyword">AS</span> daily_open,
+    <span class="function">MAX</span>(high) <span class="keyword">AS</span> daily_high,
+    <span class="function">MIN</span>(low) <span class="keyword">AS</span> daily_low,
+    <span class="function">MAX</span>(daily_close) <span class="keyword">AS</span> daily_close,
+    <span class="function">SUM</span>(volume) <span class="keyword">AS</span> daily_volume
+<span class="keyword">FROM</span>
+    daily_data
+<span class="keyword">GROUP BY</span>
+    date
+<span class="keyword">ORDER BY</span>
+    date;</pre>
+    </div>
+
+    <!-- Intraday Range -->
+    <div class="section-title">Intraday Range</div>
+    <div class="description">
+        Measures the difference between the highest and lowest prices within each trading day, providing insights into daily volatility.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">AS</span> date,
+    <span class="function">MAX</span>(high) - <span class="function">MIN</span>(low) <span class="keyword">AS</span> intraday_range
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">GROUP BY</span>
+    date
+<span class="keyword">ORDER BY</span>
+    date ASC;</pre>
+    </div>
+
+    <!-- Close-to-Close Change -->
+    <div class="section-title">Close-to-Close Change</div>
+    <div class="description">
+        Calculates the daily change in closing prices to identify trends and momentum in stock performance.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">WITH</span> daily_close <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">AS</span> date,
+        <span class="function">LAST_VALUE</span>(close) <span class="keyword">OVER</span>(<span class="keyword">PARTITION BY</span> <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</span>) <span class="keyword">AS</span> close
+    <span class="keyword">FROM</span>
+        'your_project.your_dataset.stock_data'
+)
+<span class="keyword">SELECT</span>
+    date,
+    close - <span class="function">LAG</span>(close) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> date) <span class="keyword">AS</span> close_to_close_change
+<span class="keyword">FROM</span>
+    daily_close
+<span class="keyword">ORDER BY</span>
+    date ASC;</pre>
+    </div>
+
+    <!-- OHLC Average -->
+    <div class="section-title">OHLC Average</div>
+    <div class="description">
+        Calculates the average of open, high, low, and close prices for a smoothed view of the stock's performance.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">AS</span> date,
+    <span class="function">AVG</span>((open + high + low + close) / 4) <span class="keyword">AS</span> ohlc_average
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">GROUP BY</span>
+    date
+<span class="keyword">ORDER BY</span>
+    date ASC;</pre>
+    </div>
+
+    <!-- Simple Moving Average -->
+    <div class="section-title">Simple Moving Average (SMA)</div>
+    <div class="description">
+        Calculates a 5-hour moving average of closing prices to smooth out short-term price fluctuations.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    timestamp_field_0,
+    close,
+    <span class="function">AVG</span>(close) <span class="keyword">OVER</span> (
+        <span class="keyword">ORDER BY</span> timestamp_field_0
+        <span class="keyword">ROWS BETWEEN</span> 4 <span class="keyword">PRECEDING AND</span> CURRENT ROW
+    ) <span class="keyword">AS</span> sma_5_hour
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0;</pre>
+    </div>
+</body>
+</html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .query-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #d4d4d4;
+            overflow-x: auto;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .description {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .keyword { color: #569cd6; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+    </style>
+</head>
+<body>
+    <!-- VWAP -->
+    <div class="section-title">Volume-Weighted Average Price (VWAP)</div>
+    <div class="description">
+        Calculates the average price weighted by trading volume to determine the true average price paid.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    timestamp_field_0,
+    <span class="function">SUM</span>(close * volume) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>) / <span class="function">SUM</span>(volume) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>) <span class="keyword">AS</span> vwap
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0 <span class="keyword">ASC</span>;</pre>
+    </div>
+
+    <!-- Intraday Volatility -->
+    <div class="section-title">Intraday Volatility</div>
+    <div class="description">
+        Calculates the standard deviation of closing prices within each trading day.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">WITH</span> intraday_volatility <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">AS</span> date,
+        <span class="function">STDDEV</span>(close) <span class="keyword">AS</span> intraday_volatility
+    <span class="keyword">FROM</span>
+        'your_project.your_dataset.stock_data'
+    <span class="keyword">GROUP BY</span>
+        date
+)
+<span class="keyword">SELECT</span>
+    date,
+    intraday_volatility
+<span class="keyword">FROM</span>
+    intraday_volatility
+<span class="keyword">ORDER BY</span>
+    date <span class="keyword">ASC</span>;</pre>
+    </div>
+
+    <!-- Price Volatility -->
+    <div class="section-title">Price Volatility (Close-to-Close)</div>
+    <div class="description">
+        Measures day-to-day price volatility using close price standard deviation.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">WITH</span> daily_close <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">AS</span> date,
+        <span class="function">LAST_VALUE</span>(close) <span class="keyword">OVER</span>(<span class="keyword">PARTITION BY</span> <span class="function">DATE</span>(timestamp_field_0) <span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING</span>) <span class="keyword">AS</span> close
+    <span class="keyword">FROM</span>
+        'your_project.your_dataset.stock_data'
+)
+<span class="keyword">SELECT</span>
+    date,
+    <span class="function">STDDEV</span>(close) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> date <span class="keyword">ASC ROWS BETWEEN</span> 1 <span class="keyword">PRECEDING AND</span> CURRENT ROW) <span class="keyword">AS</span> price_volatility
+<span class="keyword">FROM</span>
+    daily_close
+<span class="keyword">ORDER BY</span>
+    date <span class="keyword">ASC</span>;</pre>
+    </div>
+
+    <!-- Cumulative Volume -->
+    <div class="section-title">Cumulative Volume</div>
+    <div class="description">
+        Tracks the running total of trading volume over time.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    timestamp_field_0,
+    <span class="function">SUM</span>(volume) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>) <span class="keyword">AS</span> cumulative_volume
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0 <span class="keyword">ASC</span>;</pre>
+    </div>
+
+    <!-- Cumulative Price Change -->
+    <div class="section-title">Cumulative Price Change</div>
+    <div class="description">
+        Captures the total change in price over time to track performance trajectory.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    timestamp_field_0,
+    <span class="function">SUM</span>(close - <span class="function">LAG</span>(close) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>)) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>) <span class="keyword">AS</span> cumulative_price_change
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0 <span class="keyword">ASC</span>;</pre>
+    </div>
+</body>
+</html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .query-container {
+            background: #1e1e1e;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #d4d4d4;
+            overflow-x: auto;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .description {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        .keyword { color: #569cd6; }
+        .function { color: #dcdcaa; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+    </style>
+</head>
+<body>
+    <!-- RSI -->
+    <div class="section-title">Relative Strength Index (RSI)</div>
+    <div class="description">
+        Momentum oscillator measuring price change velocity. Uses 14-period lookback to identify overbought/oversold conditions.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">WITH</span> price_changes <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        timestamp_field_0,
+        close - <span class="function">LAG</span>(close) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC</span>) <span class="keyword">AS</span> price_change
+    <span class="keyword">FROM</span>
+        'your_project.your_dataset.stock_data'
+),
+gains_and_losses <span class="keyword">AS</span> (
+    <span class="keyword">SELECT</span>
+        timestamp_field_0,
+        <span class="keyword">IF</span>(price_change > 0, price_change, 0) <span class="keyword">AS</span> gain,
+        <span class="keyword">IF</span>(price_change < 0, <span class="function">ABS</span>(price_change), 0) <span class="keyword">AS</span> loss
+    <span class="keyword">FROM</span>
+        price_changes
+)
+<span class="keyword">SELECT</span>
+    timestamp_field_0,
+    100 - (100 / (1 + (<span class="function">AVG</span>(gain) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC ROWS BETWEEN</span> 13 <span class="keyword">PRECEDING AND</span> CURRENT ROW) /
+    <span class="function">AVG</span>(loss) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC ROWS BETWEEN</span> 13 <span class="keyword">PRECEDING AND</span> CURRENT ROW)))) <span class="keyword">AS</span> rsi_14_period
+<span class="keyword">FROM</span>
+    gains_and_losses
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0 <span class="keyword">ASC</span>;</pre>
+    </div>
+
+    <!-- EMA -->
+    <div class="section-title">Exponential Moving Average (EMA)</div>
+    <div class="description">
+        5-hour exponential moving average giving more weight to recent prices. Helps identify trends with faster response to price changes.
+    </div>
+    <div class="query-container">
+        <pre><span class="keyword">SELECT</span>
+    timestamp_field_0,
+    <span class="function">EXP</span>(<span class="function">SUM</span>(<span class="function">LN</span>(close)) <span class="keyword">OVER</span>(<span class="keyword">ORDER BY</span> timestamp_field_0 <span class="keyword">ASC ROWS BETWEEN</span> 4 <span class="keyword">PRECEDING AND</span> CURRENT ROW)) <span class="keyword">AS</span> ema_5_hour
+<span class="keyword">FROM</span>
+    'your_project.your_dataset.stock_data'
+<span class="keyword">ORDER BY</span>
+    timestamp_field_0 <span class="keyword">ASC</span>;</pre>
+    </div>
+</body>
+</html>
 <p>These SQL queries represent the core transformations and analyses that power the ETL pipeline, enabling me to draw actionable insights from raw stock market data. By carefully selecting and applying these transformations, I&rsquo;ve managed to create a streamlined process for ongoing analyses and decision-making, ultimately informing my investment strategies.</p>
 <div class="section-header">3. Automation with Apache Airflow</div>
 <p>With the foundational ETL pipeline established, the next logical step is to automate the entire process to ensure continuous and timely data ingestion. Apache Airflow, a powerful open-source workflow management tool, is ideal for orchestrating such pipelines. In this section, I outline the process of integrating Airflow to fully automate the extraction, transformation, and loading (ETL) of stock market data.</p>
@@ -109,8 +475,95 @@ export default {
 <div class="section-header">4. Connect</div>
 <p>With the backend of our ETL pipeline firmly established, the next step involves connecting the data stored in BigQuery to Power BI. This integration will allow us to visualize and analyze the data efficiently, leveraging Power BI&rsquo;s powerful dashboarding capabilities.</p>
 <p>Connecting BigQuery to Power BI is a straightforward process, yet crucial for ensuring that our data remains accessible and up-to-date. Here&rsquo;s how I did it:</p>
-<p>&nbsp; &nbsp; 1) Launching&nbsp;Power BI Desktop: The journey begins by opening Power BI Desktop. This is where the connection to BigQuery will be established and where all subsequent data analysis and visualization will take place.<br /><br />&nbsp; &nbsp; 2) Accessing<strong>&nbsp;</strong>Google BigQuery: Within Power BI, navigate to the &ldquo;Get Data&rdquo; option located on the Home tab. Power BI offers a variety of data sources, and for this project, we&rsquo;re specifically interested in Google BigQuery. Selecting this option initiates the connection process.<br /><br />&nbsp; &nbsp; 3) Authenticating&nbsp;with Google: Upon selecting BigQuery, you&rsquo;ll be prompted to sign in with your Google account. It&rsquo;s essential to use the account that has access to your BigQuery datasets. This step ensures that Power BI can retrieve the correct data for analysis.<br /><br />&nbsp; &nbsp; 4) Selecting the Dataset: After authentication, Power BI will display a list of available projects and datasets linked to your account. Here, you&rsquo;ll choose the specific datasets you want to work with. For this project, I selected the datasets that store the data processed in&nbsp;backend of the pipeline.<br /><br />&nbsp; &nbsp; 5) Loading&nbsp;Data into Power BI: Once the appropriate datasets are selected, the next step is to load them into Power BI. This is where the magic happens. Power BI takes the data from BigQuery and presents it in a format that&rsquo;s ready for visualization and analysis.<br /><br />&nbsp; &nbsp; 6) Automating&nbsp;Data Refresh: To ensure that the data in Power BI stays current, I configured an automated refresh schedule. By setting Power BI to refresh the data every day, I can be confident that the dashboards reflect the most up-to-date information from BigQuery.</p>
-<p>By following these steps, I successfully connected BigQuery to Power BI, paving the way for robust data visualization and ongoing analysis. This connection not only streamlines the workflow but also ensures that the insights derived from the data are always based on the latest available information.</p>
+<html>
+<head>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .connection-flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .step-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .dashboard-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="connection-flow">
+            <!-- Connection Process Visualization -->
+            <div class="step-card">
+                <svg viewBox="0 0 200 200">
+                    <!-- BigQuery Icon -->
+                    <rect x="20" y="60" width="160" height="80" rx="10" fill="#4285F4"/>
+                    <text x="100" y="110" fill="white" text-anchor="middle" font-size="16">BigQuery</text>
+                    <path d="M40 80 L160 80" stroke="white" stroke-width="2"/>
+                    <rect x="60" y="90" width="80" height="10" fill="white" opacity="0.3"/>
+                    <rect x="60" y="105" width="80" height="10" fill="white" opacity="0.3"/>
+                </svg>
+                <h3>1. Data Source</h3>
+                <p>Stock market data stored in BigQuery tables</p>
+            </div>
+            <div class="step-card">
+                <svg viewBox="0 0 200 200">
+                    <!-- Connection Process -->
+                    <path d="M30 100 L170 100" stroke="#333" stroke-width="4" stroke-dasharray="8,4"/>
+                    <circle cx="100" cy="100" r="30" fill="#5C2D91"/>
+                    <text x="100" y="105" fill="white" text-anchor="middle" font-size="14">Connect</text>
+                </svg>
+                <h3>2. OAuth</h3>
+                <p>Secure OAuth 2.0 connection to Google Cloud</p>
+            </div>
+            <div class="step-card">
+                <svg viewBox="0 0 200 200">
+                    <!-- Power BI Icon -->
+                    <rect x="20" y="60" width="160" height="80" rx="10" fill="#5C2D91"/>
+                    <text x="100" y="110" fill="white" text-anchor="middle" font-size="16">Power BI</text>
+                    <rect x="40" y="85" width="120" height="40" fill="white" opacity="0.2"/>
+                    <circle cx="160" cy="70" r="8" fill="#44CC11"/>
+                </svg>
+                <h3>3. Power BI Desktop</h3>
+                <p>Ready for visualization and analysis</p>
+            </div>
+        </div>
+</body>
+</html>
 <div class="section-header">5. Automate</div>
 <p>With the connection between BigQuery and Power BI established, the final step is to automate the data ingestion process, ensuring our dashboards are always up-to-date.</p>
 <p>&nbsp; &nbsp; 1) Set&nbsp;Up the Refresh Schedule: Begin by publishing your Power BI report to the Power BI service. Navigate to the dataset, select &ldquo;Scheduled Refresh,&rdquo; and choose a refresh frequency. I opted for a daily refresh to keep the data current every 24 hours.</p>
