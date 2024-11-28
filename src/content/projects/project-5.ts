@@ -6,49 +6,330 @@ export default {
     technologies: ["Python", "Marketing Data", "Data Analysis"],
     date: "2024-02-01",
     content: `
-<p>&nbsp; &nbsp;&nbsp;1. The Basics<br />&nbsp; &nbsp;&nbsp;2. Client Behavior Analysis<br />&nbsp; &nbsp; 3. Stratified Sampling<br />&nbsp; &nbsp; 4. ROC Curve<br />&nbsp; &nbsp; 5. Conclusion and Recommendations</p>
-<p><strong>1. The Basics</strong></p>
-<p>Let&rsquo;s begin by explaining what marketing is. Paraphrasing the marketing genius Dr. Philip Kotler, marketing is defined as &ldquo;the science and art of exploring, creating, and delivering value to satisfy the needs of a target market at a profit. Marketing identifies unfulfilled needs and desires. It defines, measures, and quantifies the size of the identified market and the profit potential.&rdquo;</p>
-<p>Marketing campaigns, on the other hand, consist of a set of actions and efforts aimed at reaching customers and achieving specific objectives. They are useful for achieving goals such as launching a product, increasing sales volume, enhancing brand exposure, and more.</p>
-<p>For this project, we will use a dataset from the&nbsp;<a href="https://archive.ics.uci.edu/dataset/222/bank+marketing">UCI Machine Learning Repository</a>.</p>
-<p>Before diving in, let&rsquo;s briefly define what a &ldquo;term deposit&rdquo; is. A term deposit is &ldquo;a fixed-term investment that includes the deposit of money into an account at a financial institution. Term deposit investments usually carry short-term maturities ranging from one month to a few years and will have varying levels of required minimum deposits.&rdquo; (defined by Investopedia.com)</p>
-<p>Let&rsquo;s start by exploring the basics.</p>
-<p>With just a few lines of code, we can start working with the data and begin to understand it. In this particular dataset, the bulk of the information is not derived from numerical columns but from categorical ones.</p>
-<p>&nbsp; &nbsp; - The minimum age is 18 years, with a maximum recorded age of 95. The average age is 41 years.<br />&nbsp; &nbsp; - The&nbsp;average account balance is $1,528. However, the high standard deviation indicates significant variability in individual balances across the dataset. This wide range suggests that many accounts deviate considerably from the average, with some balances being much higher or lower than the mean.<br />&nbsp; &nbsp; - Upon&nbsp;careful examination, it is evident that removing the duration column from our predictive model would be beneficial. This recommendation is based on the nature and timing of the duration variable in relation to client interactions. Specifically, duration data is only available after contact has been made with a potential client, making it unsuitable for predictive purposes when approaching new prospects who have not yet been contacted.</p>
-<p>Fortunately, in this dataset, there are no missing values. Depending on the specific needs of the project, missing data could be handled in various ways&mdash;such as removing the rows with missing values, imputing missing values with the mean, or attempting to retrieve the data manually from other sources.</p>
-<p>If we continue with our analysis:</p>
-<p>&nbsp; &nbsp; - Number&nbsp;&nbsp;of Occupations: Management is the occupation that is more prevalent in this dataset.<br />&nbsp; &nbsp; - Age&nbsp;by Occupation: As expected, the retired are the ones who have the highest median age while student are the lowest.<br />&nbsp; &nbsp; - Balance&nbsp;by Occupation: Management and Retirees are the ones who have the highest balance in their accounts.</p>
-<p><strong>2. Client Behavior Analysis</strong></p>
-<p></p>
-<p>An analysis of the campaign duration data reveals significant insights into client behavior and term deposit acquisition patterns. The data demonstrates a strong positive correlation between the duration of client interactions and the likelihood of term deposit openings. This relationship suggests that extended engagement with clients is a key factor in successful conversions.</p>
-<p>The average campaign duration across all interactions stands at 374.76 units. This benchmark provides a useful threshold for segmenting client interactions and analyzing their outcomes. When examining the data through this lens, a clear pattern emerges: clients whose interactions exceeded the average duration showed a markedly higher propensity to open term deposits.</p>
-<p>Specifically, within the cohort of clients whose interaction durations surpassed the mean, 78% proceeded to open term deposit accounts. In contrast, among those with below-average interaction durations, only 32% opted for term deposits. This substantial disparity in conversion rates underscores the critical role of prolonged engagement in fostering client trust and commitment.</p>
-<p>Given these findings, it would be strategically advantageous to prioritize and cultivate longer interactions with potential clients. Focusing resources on individuals who demonstrate a willingness to engage in extended conversations could significantly enhance the efficiency and effectiveness of our term deposit acquisition efforts. This targeted approach aligns with the data-driven insights and promises to optimize our campaign outcomes.</p>
-<p><strong>3. Stratified Sampling</strong></p>
-<p>Stratified sampling is a crucial yet often overlooked technique in model development, applicable to both regression and classification tasks. This method ensures that key features influencing the target variable are proportionally represented in both training and test datasets, thereby enhancing model reliability and generalizability.<br /><br />To illustrate the importance of stratified sampling, let&rsquo;s consider the feature of personal loans in our term deposit prediction model. This variable significantly impacts the likelihood of a client opening a term deposit, as evidenced by its -11% correlation with the target variable in our correlation matrix.<br /><br />Before implementing stratified sampling, a thorough analysis of the data distribution is essential. In this case, we&rsquo;ve observed that the &lsquo;loan&rsquo; column shows a distinct imbalance: 87% of clients do not have personal loans, while 13% do. To maintain the integrity of our model and prevent bias, it&rsquo;s crucial that both our training and test sets mirror this distribution.<br /><br />The process of implementing stratified sampling in this context involves three key steps:</p>
-<p>&nbsp; &nbsp; 1) Analyze&nbsp;the distribution of the influential feature (personal loans) in the entire dataset.<br />&nbsp; &nbsp; 2) Identify&nbsp;the proportions of each category within this feature (87% without loans, 13% with loans).<br />&nbsp; &nbsp; 3) Ensure&nbsp;that these proportions are maintained when splitting the data into training and test sets.</p>
-<p>By adhering to this stratified sampling approach, we safeguard against overfitting and ensure that our model&rsquo;s performance on the test set is a true reflection of its real-world applicability. This method is particularly valuable when dealing with imbalanced datasets or when certain features have a disproportionate impact on the target variable.<br /><br />Ultimately, stratified sampling contributes to the development of more robust and reliable predictive models, capable of performing consistently across various subsets of the data.</p>
-<p>Now we have to avoid overfitting.</p>
-<p>Overfitting occurs when a modeling algorithm captures random noise in the data rather than identifying the underlying pattern. This issue becomes evident when a model performs exceptionally well on the training data but fails to generalize effectively to the test data, resulting in poor performance on new, unseen data. Essentially, overfitting means the model has memorized the training data rather than learning to generalize from it. For instance, if a Decision Tree Classifier or Random Forest Classifier shows near-perfect accuracy scores (e.g., 100% or 99%) on the training data but performs poorly on test data, it is likely overfitting.</p>
-<p>To mitigate overfitting, cross-validation is a highly effective technique. This involves dividing the dataset into multiple subsets. For example, with a 3-fold cross-validation, the data is split into three parts: two-thirds (66%) is used for training and one-third (33%) for testing. This process is repeated three times, ensuring that each subset is used for both training and testing. Cross-validation helps capture the overall pattern of the data and ensures that the model generalizes well across different subsets of the dataset.</p>
-<p>Once trained, a confusion matrix helps assess the model's classification performance, such as predicting client term deposit subscriptions. It breaks down predictions into True Positives, False Positives, True Negatives, and False Negatives.</p>
-<p>&nbsp; &nbsp; - True&nbsp;Negatives (Top-Left Cell):&nbsp;The count of instances where the model correctly predicted that clients would not subscribe to a term deposit.<br />&nbsp; &nbsp; - False&nbsp;Negatives (Top-Right Cell):&nbsp;The count of instances where the model incorrectly predicted that clients would not subscribe, even though they did.<br />&nbsp; &nbsp; - False Positives&nbsp;(Bottom-Left Cell):&nbsp;The count of instances where the model incorrectly predicted that clients would subscribe, even though they did not.<br />&nbsp; &nbsp; - True&nbsp;Positives (Bottom-Right Cell):&nbsp;The count of instances where the model correctly predicted that clients would subscribe to a term deposit.</p>
-<p>The confusion matrix provides insight into the model's performance by showing accurate and inaccurate predictions across categories, achieving a Gradient Boost Classifier accuracy of 0.85. To better understand these results, we can examine two key metrics: Recall and Precision. Recall measures the model's ability to identify all relevant instances (true positive rate), while Precision indicates the accuracy of positive predictions. These metrics have an inherent tradeoff - increasing precision often decreases recall, as seen when raising precision thresholds makes the model more conservative in positive predictions. Our precision score is&nbsp;0.8244135732179458, and our recall score is&nbsp;0.8553875236294896.</p>
-<p><strong>4. ROC Curve (Receiver Operating Characteristic)</strong></p>
-<p>The ROC curve is a graphical representation used to evaluate the performance of a classification model. It illustrates the model&rsquo;s ability to distinguish between two classes, such as term deposit subscriptions (True Positives) versus non-subscriptions.</p>
-<p>As the classification threshold changes, the ROC curve plots various combinations of the false positive rate and true positive rate. A model that performs well will have its ROC curve close to the top-left corner of the plot, indicating high true positive rates and low false positive rates. The area under the ROC curve (AUC) is often used as a summary measure of the model&rsquo;s performance, with a value closer to 1 indicating better overall classification ability.</p>
-<p>&nbsp; &nbsp; - Gradient Boost Classifier Score:&nbsp;0.9173128596743366<br />&nbsp; &nbsp; - Neural Classifier Score:&nbsp;0.9167698643666292<br />&nbsp; &nbsp; - Naives Bayes Classifier Score:&nbsp;0.803363959942255</p>
-<p>Now we need to know the features influencing term deposit subscription results, and for that we use a decision tree classifier, as it identifies several key features that significantly impact the likelihood of a term deposit subscription:</p>
-<p>&nbsp; &nbsp; 1) Duration:&nbsp;the length of the conversation between the sales representative and the potential client. Longer conversations are often associated with higher subscription rates.<br />&nbsp; &nbsp; 2) Contact:&nbsp;the number of contacts made to the potential client within the same marketing campaign. More contacts generally increase the likelihood of a subscription.<br />&nbsp; &nbsp; 3) Month:&nbsp;the month of the year when the contact was made. Seasonal variations can influence client behavior and subscription rates.</p>
-<p>These features are considered the most influential in predicting whether a potential client will subscribe to a term deposit.</p>
-<p><strong>5. Conclusion and Recommendations</strong></p>
-<p>1) Months&nbsp;of Marketing Activity:&nbsp;the highest level of marketing activity occurred in May, but this month also had the lowest effective subscription rate (-34.49%). For future campaigns, it would be beneficial to concentrate efforts in March, September, October, and December. December&rsquo;s low marketing activity might be an opportunity for increased engagement, warranting further investigation.</p>
-<p>2) Seasonality:&nbsp;potential clients show a higher tendency to subscribe to term deposits during the fall and winter seasons. Future marketing campaigns should align with these seasons to enhance effectiveness.</p>
-<p>3) Campaign&nbsp;Calls: implement a policy to limit contact to no more than three calls per potential client. Excessive calls increase the likelihood of rejection. Streamlining contact strategies can improve overall campaign efficiency.</p>
-<p>4) Age Category: focus the marketing campaign on individuals in their 20s or younger and those aged 60 and older. The youngest age group has a 60% subscription rate, while the eldest category shows a 76% subscription rate. Targeting these demographics could boost subscription rates.</p>
-<p>5) Occupation: target potential clients who are students or retired individuals. Retired clients are inclined to invest in term deposits to earn interest on their savings, while students also show a tendency to subscribe. Tailoring the campaign to these occupations may increase success.</p>
-<p>6) House Loands and Balances: potential clients with lower balances are more likely to have house loans, which limits their capacity to subscribe to term deposits. Conversely, individuals with average or high balances are less likely to have house loans and more likely to open term deposits. Future campaigns should focus on clients with average and high balances.</p>
-<p>7) Develop a Questionnaire for Calls: since call duration correlates positively with subscription likelihood, incorporating an engaging questionnaire could extend conversation length. While this does not guarantee a subscription, it can increase client engagement and potentially improve conversion rates.</p>
-<p>8) Target Individuals with Higher Duration (Above 375 seconds): focus on potential clients whose call duration exceeds 375 seconds. This group shows a high likelihood (78%) of opening a term deposit account, suggesting that targeting them could significantly improve campaign success rates.</p>
+<html>
+<head>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .analysis-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .text-content {
+            margin-bottom: 25px;
+        }
+        
+        .link-style {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .link-style:hover {
+            text-decoration: underline;
+        }
+        
+        .section-header {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .visualization-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        
+        .visualization-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .visualization-image {
+            width: 480px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="analysis-container">
+        <div class="text-content">
+            <p>1. The Basics<br />2. Client Behavior Analysis<br />3. Stratified Sampling<br />4. ROC Curve<br />5. Conclusion and Recommendations</p>
+        </div>
+
+        <div class="section-header">1. The Basics</div>
+        
+        <div class="text-content">
+            <p>Let's begin by explaining what marketing is. Paraphrasing the marketing genius Dr. Philip Kotler, marketing is defined as "the science and art of exploring, creating, and delivering value to satisfy the needs of a target market at a profit. Marketing identifies unfulfilled needs and desires. It defines, measures, and quantifies the size of the identified market and the profit potential."</p>
+            
+            <p>Marketing campaigns, on the other hand, consist of a set of actions and efforts aimed at reaching customers and achieving specific objectives. They are useful for achieving goals such as launching a product, increasing sales volume, enhancing brand exposure, and more.</p>
+            
+            <p>For this project, we will use a dataset from the <a href="https://archive.ics.uci.edu/dataset/222/bank+marketing" class="link-style">UCI Machine Learning Repository</a>.</p>
+        </div>
+
+        <div class="highlight-box">
+            <p>Before diving in, let's briefly define what a "term deposit" is. A term deposit is "a fixed-term investment that includes the deposit of money into an account at a financial institution. Term deposit investments usually carry short-term maturities ranging from one month to a few years and will have varying levels of required minimum deposits." (defined by Investopedia.com)</p>
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Basic Statistics Overview</div>
+            <img class="visualization-image" src="https://i.ibb.co/rcMQX0j/image-1.png" alt="Basic Statistics" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Distribution Analysis</div>
+            <img class="visualization-image" src="https://i.ibb.co/z7Fx11L/image-2.webp" alt="Distribution Analysis" />
+        </div>
+
+        <div class="text-content">
+            <p>If we continue with our analysis:</p>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <p><strong>Number of Occupations:</strong> Management is the occupation that is more prevalent in this dataset.</p>
+                </div>
+                <div class="insight-card">
+                    <p><strong>Age by Occupation:</strong> As expected, the retired are the ones who have the highest median age while student are the lowest.</p>
+                </div>
+                <div class="insight-card">
+                    <p><strong>Balance by Occupation:</strong> Management and Retirees are the ones who have the highest balance in their accounts.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Occupation Analysis</div>
+            <img class="visualization-image" src="https://i.ibb.co/RYsnDn1/image-3.png" alt="Occupation Analysis" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">In what industries are our clients depending on their age</div>
+            <img class="visualization-image" src="https://i.ibb.co/9rzNttk/newplot.png" alt="Balance Distribution" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">How high is their balance depending on job occupation</div>
+            <img class="visualization-image" src="https://i.ibb.co/M7pCV1V/newplot-1.png" alt="Age Distribution" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">How do loans impact people, depending on their marital status and education</div>
+            <img class="visualization-image" src="https://i.ibb.co/7Xt0MmV/newplot-2.png" alt="Occupation Distribution" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Some people have a deposit with us, others don't. What are our clients and not clients jobs?</div>
+            <img class="visualization-image" src="https://i.ibb.co/Yt10CP3/image-6.png" alt="Campaign Analysis" />
+        </div>
+<div class="section-header">2. Client Behavior Analysis</div>
+        
+        <div class="text-content">
+            <div class="highlight-box">
+                <p>An analysis of the campaign duration data reveals significant insights into client behavior and term deposit acquisition patterns. The data demonstrates a strong positive correlation between the duration of client interactions and the likelihood of term deposit openings.</p>
+                
+                <p>The average campaign duration across all interactions stands at 374.76 units. This benchmark provides a useful threshold for segmenting client interactions and analyzing their outcomes. When examining the data through this lens, a clear pattern emerges: clients whose interactions exceeded the average duration showed a markedly higher propensity to open term deposits.</p>
+                
+                <p>Specifically, within the cohort of clients whose interaction durations surpassed the mean, 78% proceeded to open term deposit accounts. In contrast, among those with below-average interaction durations, only 32% opted for term deposits.</p>
+            </div>
+        </div>
+
+        <div class="section-header">3. Stratified Sampling</div>
+        
+        <div class="text-content">
+            <p>Stratified sampling is a crucial yet often overlooked technique in model development, applicable to both regression and classification tasks. This method ensures that key features influencing the target variable are proportionally represented in both training and test datasets, thereby enhancing model reliability and generalizability.</p>
+            
+            <div class="insight-card">
+                <p>Before implementing stratified sampling, a thorough analysis of the data distribution is essential. In this case, we've observed that the 'loan' column shows a distinct imbalance:</p>
+                <ul>
+                    <li>87% of clients do not have personal loans</li>
+                    <li>13% do have personal loans</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <p>The process of implementing stratified sampling involves three key steps:</p>
+                <ol>
+                    <li>Analyze the distribution of the influential feature (personal loans) in the entire dataset.</li>
+                    <li>Identify the proportions of each category within this feature (87% without loans, 13% with loans).</li>
+                    <li>Ensure that these proportions are maintained when splitting the data into training and test sets.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Confusion Matrix Analysis</div>
+            <img class="visualization-image" src="https://i.ibb.co/Jt9XzfG/image-7.png" alt="Confusion Matrix" />
+        </div>
+
+        <div class="text-content">
+            <div class="highlight-box">
+                <p>To mitigate overfitting, cross-validation is implemented with the following characteristics:</p>
+                <ul>
+                    <li>Training Set: Two-thirds (66%) of the data</li>
+                    <li>Testing Set: One-third (33%) of the data</li>
+                    <li>Process is repeated three times</li>
+                    <li>Ensures each subset is used for both training and testing</li>
+                </ul>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <p><strong>Gradient Boost Classifier accuracy:</strong> 0.85</p>
+                    <p><strong>Precision score:</strong> 0.8244135732179458</p>
+                    <p><strong>Recall score:</strong> 0.8553875236294896</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">4. ROC Curve Analysis</div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">ROC Curve Comparison</div>
+            <img class="visualization-image" src="https://i.ibb.co/dfrcVLS/image-8.png" alt="ROC Curves" />
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Model Performance Metrics</div>
+            <img class="visualization-image" src="https://i.ibb.co/3mSVNqt/image-9.png" alt="Model Metrics" />
+        </div>
+
+        <div class="highlight-box">
+            <p>Model Performance Scores:</p>
+            <ul>
+                <li>Gradient Boost Classifier Score: 0.9173128596743366</li>
+                <li>Neural Classifier Score: 0.9167698643666292</li>
+                <li>Naives Bayes Classifier Score: 0.803363959942255</li>
+            </ul>
+        </div>
+
+        <div class="visualization-card">
+            <div class="visualization-title">Feature Importance Analysis</div>
+            <img class="visualization-image" src="https://i.ibb.co/Wtsfb89/image-10.png" alt="Feature Importance" />
+        </div>
+<div class="section-header">5. Conclusion and Recommendations</div>
+
+        <div class="text-content">
+            <div class="recommendations-grid" style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">1. Months of Marketing Activity</h3>
+                    <p>The highest level of marketing activity occurred in May, but this month also had the lowest effective subscription rate (-34.49%). For future campaigns:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Focus efforts on March, September, October, and December</li>
+                        <li>Investigate December's low marketing activity as a potential opportunity</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">2. Seasonality Patterns</h3>
+                    <p>Potential clients show higher tendency to subscribe during fall and winter seasons. Align future marketing campaigns with these seasonal preferences.</p>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">3. Campaign Calls Strategy</h3>
+                    <p>Implement a three-call limit policy per potential client:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Excessive calls increase rejection likelihood</li>
+                        <li>Focus on quality of interaction over quantity</li>
+                        <li>Streamline contact strategies for better efficiency</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">4. Age Category Targeting</h3>
+                    <div class="stats-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                        <div class="stat-item">
+                            <strong>20s and younger:</strong> 60% subscription rate
+                        </div>
+                        <div class="stat-item">
+                            <strong>60 and older:</strong> 76% subscription rate
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">5. Occupation Focus</h3>
+                    <p>Primary target segments:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Students: High subscription potential</li>
+                        <li>Retired individuals: Interested in earning interest on savings</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">6. Financial Profile Analysis</h3>
+                    <div class="profile-grid" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                        <div class="profile-item">
+                            <strong>Lower Balances:</strong> More likely to have house loans, limited term deposit capacity
+                        </div>
+                        <div class="profile-item">
+                            <strong>Average/High Balances:</strong> Less likely to have house loans, higher term deposit potential
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">7. Call Strategy Enhancement</h3>
+                    <p>Develop engaging questionnaire to extend conversation duration:</p>
+                    <ul style="margin-top: 10px;">
+                        <li>Positive correlation between call duration and subscription likelihood</li>
+                        <li>Focus on meaningful engagement</li>
+                        <li>Design questions that encourage detailed responses</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    <h3 style="color: #333; margin-bottom: 15px;">8. Duration-Based Targeting</h3>
+                    <div class="highlight-box" style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-top: 10px;">
+                        <p style="margin: 0;"><strong>Key Finding:</strong> Calls exceeding 375 seconds show 78% term deposit subscription rate</p>
+                    </div>
+                    <ul style="margin-top: 15px;">
+                        <li>Prioritize longer conversations</li>
+                        <li>Train staff in engagement techniques</li>
+                        <li>Monitor and optimize call duration metrics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
     `
   };

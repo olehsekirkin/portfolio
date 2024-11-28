@@ -7,7 +7,7 @@ export default {
     date: "2024-02-01",
     content: `
 <p>This website is open source and available for everyone to copy and use, you can find it on my GitHub, click <a href="https://github.com/olehsekirkin/portfolio">here</a></p>
-<p>The minimalistic aesthetic is something I was going after, so I hope you enjoy it too. Website was build using Astro, TypeScript, CSS and HTML.</p>
+<p>The minimalistic aesthetic is something I was going after, so I hope you enjoy it too. Website was build using Astro, TypeScript, CSS and HTML. I hope you enjoy hardcoded HTML. </p>
 <p>&nbsp;</p>
     `
   };
