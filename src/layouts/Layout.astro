@@ -46,7 +46,7 @@ const currentPath = pathname.slice(1);
       <div class="max-w-3xl mx-auto px-4">
         <ul class="flex justify-center space-x-4">
           {navItems.map(({ path, label }) => {
-            const isActive = currentPath === path;
+            const isActive = currentPath.startsWith(path);
             return (
               <li>
                 <a 
