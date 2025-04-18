@@ -10,8 +10,8 @@ const { title } = Astro.props;
 const headerInfo = {
   name: "Oleh Sekirkin",
   subtitle: "Business Professional & Data Enthusiast",
-  location: "Boston, Massachusets, United States",
-  photoUrl: "public/images/meee.jpg",
+  location: "Boston, Massachusetts, United States",
+  photoUrl: "/images/meee.jpg",
   socials: [
     { label: "LinkedIn", url: "https://www.linkedin.com/in/olehusofa" },
     { label: "GitHub", url: "https://github.com/olehsekirkin" },
@@ -26,6 +26,7 @@ const navItems = [
 
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1);
+const currentSegment = currentPath.split('/')[0];
 ---
 
 <!doctype html>
@@ -46,7 +47,7 @@ const currentPath = pathname.slice(1);
       <div class="max-w-3xl mx-auto px-4">
         <ul class="flex justify-center space-x-4">
           {navItems.map(({ path, label }) => {
-            const isActive = currentPath === path;
+            const isActive = path === "" ? currentSegment === "" : currentSegment === path;
             return (
               <li>
                 <a 
