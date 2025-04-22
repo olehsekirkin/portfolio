@@ -2,7 +2,7 @@ export default {
   id: "project-2",
   title: "Motor Vehicle Collisions",
   image: "/images/cars.png",
-  description: "Leveraged advanced geospatial analysis and statistical testing to identify critical crash hotspots and high-risk patterns in NYC's motor vehicle collisions. Uncovered statistically significant correlations between accident severity, location, and timing (p < 0.001), enabling data-driven recommendations for emergency response optimization and targeted safety interventions.",
+  description: "Using geospatial analysis and statistical testing, I pinpointed high-risk crash zones and patterns in NYC’s traffic data. I found strong links between when and where accidents happened and how severe they were (with a significance level of p < 0.001). These insights helped inform smarter emergency response strategies and targeted safety improvements.",
   technologies: ["Python", "Folium", "Statistical Testing Tools", "Data Analysis"],
   date: "2024-02-01",
   content: `

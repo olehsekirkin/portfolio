@@ -2,7 +2,7 @@ export default {
   id: "project-1",
   title: "Unlocking Insights in Healthcare",
   image: "/images/healthcare.png",
-  description: "Engineered a healthcare decision-making system by building a predictive analytics system that achieved 97% accuracy in patient risk assessment and uncovered $20,000+ cost-saving opportunities through advanced clustering and ML modeling. Transformed raw patient data into an interactive dashboard for real-time monitoring of critical healthcare metrics.",
+  description: "Developed a predictive analytics system that helped assess patient risk with 97% accuracy, which in turn highlighted over $20,000 in potential cost savings using advanced clustering and machine learning. I also took complex patient data and turned it into a clear, interactive dashboard that made it easier for healthcare teams to track critical metrics in real time.",
   technologies: ["SQL", "Python", "Data Analysis", "Data Science"],
   date: "2024-02-01",
   content: `
